@@ -17,7 +17,8 @@ class BranchFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'telephone' => fake()->phoneNumber(),
+            'email' => fake()->safeEmail()
         ];
     }
 }

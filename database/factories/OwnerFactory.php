@@ -17,7 +17,10 @@ class OwnerFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'firstname' => fake()->firstName(),
+            'lastname' => fake()->lastName(),
+            'email' => fake()->unique()->safeEmail(),
+            'telephone' => fake()->phoneNumber()
         ];
     }
 }

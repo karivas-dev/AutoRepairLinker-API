@@ -17,7 +17,8 @@ class BidFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'budget' => fake()->randomFloat(2),
+            'timespan' => fake()->dateTimeBetween('-10 years', '+10 years'),
         ];
     }
 }

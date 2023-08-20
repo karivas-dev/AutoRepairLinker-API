@@ -17,7 +17,9 @@ class ReplacementFactory extends Factory
     public function definition(): array
     {
         return [
-            //
+            'name' => fake()->word(),
+            'description' => fake()->paragraph(3),
+            'model' => fake()->word()
         ];
     }
 }
