@@ -15,10 +15,6 @@ return new class extends Migration
         Schema::create('insurers', function (Blueprint $table) {
             $table->id();
             $table->string('name');
-            $table->string('email');
-            $table->string('telephone');
-            $table->foreignIdFor(District::class)->constrained();
-            $table->timestamps();
         });
     }
 

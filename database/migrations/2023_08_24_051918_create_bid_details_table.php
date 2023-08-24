@@ -1,9 +1,9 @@
 <?php
 
+use App\Models\Bid;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use App\Models\District;
 
 return new class extends Migration
 {
@@ -12,9 +12,11 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('garages', function (Blueprint $table) {
+        Schema::create('bid_details', function (Blueprint $table) {
             $table->id();
+            $table->foreignIdFor(Bid::class)->constrained();
             $table->string('name');
+            $table->decimal('price');
         });
     }
 
@@ -23,6 +25,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('garages');
+        Schema::dropIfExists('bid_details');
     }
 };
