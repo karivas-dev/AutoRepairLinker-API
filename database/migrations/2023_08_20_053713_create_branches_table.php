@@ -16,8 +16,9 @@ return new class extends Migration
             $table->id();
             $table->string('email');
             $table->string('telephone');
+            $table->boolean('main');
+            $table->morphs('branchable');
             $table->foreignIdFor(District::class)->constrained();
-            $table->morphs('brancheable');
             $table->timestamps();
         });
     }

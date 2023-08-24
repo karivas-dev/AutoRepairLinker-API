@@ -16,10 +16,10 @@ return new class extends Migration
         Schema::create('cars', function (Blueprint $table) {
             $table->id();
             $table->string('model');
-            $table->foreignIdFor(Owner::class)->constrained();
             $table->string('plates');
-            $table->foreignIdFor(Brand::class)->constrained();
             $table->string('serial_number');
+            $table->foreignIdFor(Owner::class)->constrained();
+            $table->foreignIdFor(Brand::class)->constrained();
             $table->timestamps();
         });
     }
