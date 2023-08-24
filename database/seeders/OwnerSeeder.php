@@ -16,8 +16,8 @@ class OwnerSeeder extends Seeder
     {
         $districtsID = District::pluck('id');
 
-        Owner::factory(15)->create([
+        Owner::factory(15)->sequence(fn($sqn) => [
             'district_id' => $districtsID->random()
-        ]);
+        ])->create();
     }
 }
