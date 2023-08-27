@@ -20,11 +20,12 @@ return new class extends Migration
             $table->string('password');
             $table->morphs('belongable');
             $table->rememberToken();
+            $table->softDeletes();
             $table->timestamps();
 
-            $table->foreign('belongable_id', 'belongable_garage_id')->references('id')->on('garages');
-            $table->foreign('belongable_id', 'belongable_insurer_id')->references('id')->on('insurers');
-            $table->foreign('belongable_id', 'belongable_store_id')->references('id')->on('stores');
+            //$table->foreign('belongable_id', 'belongable_garage_id')->references('id')->on('garages');
+            //$table->foreign('belongable_id', 'belongable_insurer_id')->references('id')->on('insurers');
+            //$table->foreign('belongable_id', 'belongable_store_id')->references('id')->on('stores');
         });
     }
 
