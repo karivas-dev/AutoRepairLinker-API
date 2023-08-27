@@ -4,16 +4,16 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
-use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
-class BidStatus extends Model
+class BidDetails extends Model
 {
     use HasFactory;
 
     public $timestamps = false;
 
-    public function bids(): HasMany
+    public function bid(): BelongsTo
     {
-        return $this->hasMany(Bid::class);
+        return $this->belongsTo(Bid::class);
     }
 }

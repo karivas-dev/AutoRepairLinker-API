@@ -6,7 +6,7 @@ use App\Models\StatusTicket;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class StatusTicketSeeder extends Seeder
+class BidDetailsSeeder extends Seeder
 {
     /**
      * Run the database seeds.
