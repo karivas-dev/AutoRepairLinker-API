@@ -20,6 +20,10 @@ return new class extends Migration
             $table->morphs('branchable');
             $table->foreignIdFor(District::class)->constrained();
             $table->timestamps();
+
+            $table->foreign('branchable_id', 'branchable_garage_id')->references('id')->on('garages');
+            $table->foreign('branchable_id', 'branchable_insurer_id')->references('id')->on('insurers');
+            $table->foreign('branchable_id', 'branchable_store_id')->references('id')->on('stores');
         });
     }
 
