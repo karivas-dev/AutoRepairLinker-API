@@ -6,14 +6,14 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
-class BidStatus extends Model
+class TicketStatus extends Model
 {
     use HasFactory;
 
     public $timestamps = false;
 
-    public function bids(): HasMany
+    public function tickets(): HasMany
     {
-        return $this->hasMany(Bid::class);
+        return $this->hasMany(Ticket::class);
     }
 }
