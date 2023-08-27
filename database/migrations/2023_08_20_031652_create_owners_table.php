@@ -17,8 +17,9 @@ return new class extends Migration
             $table->string('firstname');
             $table->string('lastname');
             $table->string('email')->unique();
-            $table->string('telephone');
+            $table->string('telephone')->unique();
             $table->foreignIdFor(District::class)->constrained();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

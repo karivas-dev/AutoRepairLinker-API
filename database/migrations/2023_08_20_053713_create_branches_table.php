@@ -14,8 +14,8 @@ return new class extends Migration
     {
         Schema::create('branches', function (Blueprint $table) {
             $table->id();
-            $table->string('email');
-            $table->string('telephone');
+            $table->string('email')->unique();
+            $table->string('telephone')->unique();
             $table->boolean('main')->default(false);
             $table->morphs('branchable');
             $table->foreignIdFor(District::class)->constrained();
