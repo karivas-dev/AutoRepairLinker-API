@@ -13,14 +13,19 @@ return new class extends Migration
     {
         Schema::create('users', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->string('firstname');
             $table->string('lastname');
             $table->string('email')->unique();
-            $table->string('telephone')->nullable();
+            $table->string('telephone')->unique()->nullable();
             $table->string('password');
             $table->morphs('belongable');
             $table->rememberToken();
+            $table->softDeletes();
             $table->timestamps();
+
+            //$table->foreign('belongable_id', 'belongable_garage_id')->references('id')->on('garages');
+            //$table->foreign('belongable_id', 'belongable_insurer_id')->references('id')->on('insurers');
+            //$table->foreign('belongable_id', 'belongable_store_id')->references('id')->on('stores');
         });
     }
 
