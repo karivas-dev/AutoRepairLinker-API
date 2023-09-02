@@ -18,8 +18,6 @@ class InsurerFactory extends Factory
     {
         return [
             'name' => fake()->company(),
-            'email' => fake()->companyEmail(),
-            'telephone' => fake()->phoneNumber()
         ];
     }
 }
