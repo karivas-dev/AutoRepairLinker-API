@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Brand;
 use Illuminate\Database\Eloquent\Factories\Factory;
 
 /**
@@ -16,8 +17,11 @@ class ModelFactory extends Factory
      */
     public function definition(): array
     {
+        $brands_id = Brand::pluck('id');
+
         return [
-            //
+            'name' => fake()->word(),
+            'brand_id' => $brands_id,
         ];
     }
 }
