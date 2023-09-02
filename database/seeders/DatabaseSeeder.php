@@ -14,8 +14,11 @@ class DatabaseSeeder extends Seeder
     {
         $this->call([
             StatesTownsDistrictsSeeder::class,
+            TicketStatusSeeder::class,
             BidStatusSeeder::class,
-            StatusTicketSeeder::class,
+            StoreSeeder::class,
+            GarageSeeder::class,
+            InsurerSeeder::class,
             OwnerSeeder::class,
         ]);
         // \App\Models\User::factory(10)->create();

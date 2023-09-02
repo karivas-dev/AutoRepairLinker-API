@@ -13,14 +13,14 @@ class BidStatusSeeder extends Seeder
      */
     public function run(): void
     {
-        $statuses = [
-            'Processing',
-            'Approved',
-            'Rejected'
-        ];
+        $status = collect([
+            'Aprobado',
+            'Rechazado',
+            'En revisión'
+        ]);
 
-        BidStatus::factory(count($statuses))
-            ->sequence(fn($sqn) => ['name' => $statuses[$sqn->index]])
-            ->create();
+        BidStatus::factory(count($status))->sequence( fn ($sequence) => [
+            'name' => $status[$sequence->index]
+        ])->create();
     }
 }

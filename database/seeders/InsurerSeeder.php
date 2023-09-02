@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Insurer;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -12,6 +13,20 @@ class InsurerSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        $insuranceCompanies = [
+            "Seguro AutoPro",
+            "Mundo Asegurado",
+            "Seguros del Automóvil",
+            "Seguro Vehicular Plus",
+            "Protección Mecánica",
+            "Protección Total Auto",
+            "Asegura AutoYa",
+            "Seguro Motorizado",
+            "Mundo del Seguro de Autos",
+        ];
+
+        Insurer::factory(count($insuranceCompanies))->sequence(fn($sequence) => [
+            'name' => $insuranceCompanies[$sequence->index]
+        ])->create();
     }
 }

@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Store;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -12,6 +13,42 @@ class StoreSeeder extends Seeder
      */
     public function run(): void
     {
-        //
+        $replacementStores = [
+            "AutoPartes Rápidas",
+            "Reparaciones Express",
+            "Recambios Veloces",
+            "Piezas de Repuesto Total",
+            "Mundo de Refacciones",
+            "Soluciones Automotrices",
+            "Tienda de Sustitutos",
+            "Piezas Directas",
+            "Repuestos a Tu Alcance",
+            "Automóviles en Rehabilitación",
+            "Refacciones Amigables",
+            "Todo en Repuestos",
+            "Automovilística Rápida",
+            "Servicio de Reposición",
+            "Repuestos Eficientes",
+            "Soluciones Mecánicas",
+            "Tienda de Sustitución",
+            "Reemplazos de Calidad",
+            "Recambios Instantáneos",
+            "Piezas para Autos",
+            "Repuestos de Confianza",
+            "AutoMágico",
+            "Rápido Refaccionario",
+            "Sustitutos Profesionales",
+            "La Rueda de Repuestos",
+            "Auto-Rescue",
+            "Piezas en Tiempo Real",
+            "Refaccionario Express",
+            "Sustitutos Expertos",
+            "Autopartes Prontas",
+            "Mundo del Repuesto",
+        ];
+
+        Store::factory(count($replacementStores))->sequence(fn($sequence) => [
+            'name'=> $replacementStores[$sequence->index]
+        ])->create();
     }
 }
