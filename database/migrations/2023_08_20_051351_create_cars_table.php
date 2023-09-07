@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\Insurer;
+use App\Models\Branch;
 use App\Models\Model;
 use App\Models\Owner;
 use Illuminate\Database\Migrations\Migration;
@@ -19,7 +19,7 @@ return new class extends Migration {
             $table->string('serial_number');
             $table->foreignIdFor(Owner::class)->constrained();
             $table->foreignIdFor(Model::class)->constrained();
-            $table->foreignIdFor(Insurer::class)->constrained();
+            $table->foreignIdFor(Branch::class)->constrained();
             $table->timestamps();
         });
     }
