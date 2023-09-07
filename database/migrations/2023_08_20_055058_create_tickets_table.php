@@ -20,9 +20,9 @@ return new class extends Migration
             $table->id();
             $table->foreignIdFor(User::class)->constrained();
             $table->string('description');
-            $table->foreignIdFor(Garage::class)->constrained();
+            $table->foreignIdFor(Garage::class)->nullable()->constrained();
             $table->foreignIdFor(Car::class)->constrained();
-            $table->foreignIdFor(Branch::class)->constrained();
+            $table->foreignIdFor(Branch::class)->nullable()->constrained();
             $table->foreignIdFor(TicketStatus::class)->constrained();
             $table->timestamps();
         });
