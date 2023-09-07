@@ -2,7 +2,6 @@
 
 namespace Database\Factories;
 
-use App\Models\Insurer;
 use App\Models\Model;
 use App\Models\Owner;
 use Illuminate\Database\Eloquent\Factories\Factory;
@@ -13,9 +12,8 @@ use Illuminate\Support\Collection;
  */
 class CarFactory extends Factory
 {
-    static ?Collection $ownerIds = null;
-    static ?Collection $modelIds = null;
-    static ?Collection $insurerIds = null;
+    static ?Collection $owner_Ids = null;
+    static ?Collection $model_Ids = null;
     /**
      * Define the model's default state.
      *
@@ -23,22 +21,18 @@ class CarFactory extends Factory
      */
     public function definition(): array
     {
-        if (CarFactory::$ownerIds == null) {
-            CarFactory::$ownerIds = Owner::pluck('id');
+        if (CarFactory::$owner_Ids == null) {
+            CarFactory::$owner_Ids = Owner::pluck('id');
         }
-        if (CarFactory::$modelIds == null) {
-            CarFactory::$modelIds = Model::pluck('id');
-        }
-        if (CarFactory::$insurerIds == null) {
-            CarFactory::$insurerIds = Insurer::pluck('id');
+        if (CarFactory::$model_Ids == null) {
+            CarFactory::$model_Ids = Model::pluck('id');
         }
 
         return [
             'plates' => fake()->word(),
             'serial_number' => fake()->word(),
-            'owner_id' => CarFactory::$ownerIds->random(),
-            'model_id' => CarFactory::$modelIds->random(),
-            'insurer_id' => CarFactory::$insurerIds->random()
+            'owner_id' => CarFactory::$owner_Ids->random(),
+            'model_id' => CarFactory::$model_Ids->random(),
         ];
     }
 }

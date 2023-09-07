@@ -28,7 +28,6 @@ class InventoryFactory extends Factory
             InventoryFactory::$store_Ids = Replacement::pluck('id');
         }
         return [
-            'store_id' => InventoryFactory::$store_Ids->random(),
             'replacement_id' => InventoryFactory::$replacement_Ids->random(),
             'quantity' => fake()->randomNumber(3),
             'unit_price' => fake()->randomFloat(2)

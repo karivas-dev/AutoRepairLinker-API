@@ -25,8 +25,8 @@ class BranchFactory extends Factory
         }
 
         return [
-            'telephone' => fake()->phoneNumber(),
             'email' => fake()->safeEmail(),
+            'telephone' => fake()->phoneNumber(),
             'main' => false,
             'district_id' => BranchFactory::$districtIds->random(),
         ];
