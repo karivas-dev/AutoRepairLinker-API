@@ -1,6 +1,6 @@
 <?php
 
-use App\Models\Branch;
+use App\Models\Bid;
 use App\Models\Replacement;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
@@ -13,12 +13,12 @@ return new class extends Migration
      */
     public function up(): void
     {
-        Schema::create('inventories', function (Blueprint $table) {
+        Schema::create('bid_replacements', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Branch::class)->constrained();
+            $table->foreignIdFor(Bid::class)->constrained();
             $table->foreignIdFor(Replacement::class)->constrained();
+            $table->float('price');
             $table->integer('quantity');
-            $table->decimal('unit_price');
             $table->timestamps();
         });
     }
@@ -28,6 +28,6 @@ return new class extends Migration
      */
     public function down(): void
     {
-        Schema::dropIfExists('inventories');
+        Schema::dropIfExists('bid_replacements');
     }
 };
