@@ -2,7 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Models\Brand;
+use App\Models\Model;
+use App\Models\Replacement;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -13,10 +14,10 @@ class ReplacementSeeder extends Seeder
      */
     public function run(): void
     {
-        $brands_id = Brand::pluck('id');
+        $models_id = Model::pluck('id');
 
-        Brand::factory(15)->sequence( fn($sqn) => [
-            'brand_id' => $brands_id->random()
+        Replacement::factory(15)->sequence( fn($sqn) => [
+            'model_id' => $models_id->random()
         ])->create();
     }
 }

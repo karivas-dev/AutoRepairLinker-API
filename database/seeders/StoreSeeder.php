@@ -2,8 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\Branch;
 use App\Models\Store;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class StoreSeeder extends Seeder
@@ -48,7 +49,12 @@ class StoreSeeder extends Seeder
         ];
 
         Store::factory(count($replacementStores))->sequence(fn($sequence) => [
-            'name'=> $replacementStores[$sequence->index]
-        ])->create();
+            'name' => $replacementStores[$sequence->index]
+        ])->create()->each(function ($store) {
+            $store->branches()->saveMany(Branch::factory(rand(1, 5))->make());
+            $store->branches()->first()->update(['main' => true]);
+
+            $store->users()->saveMany(User::factory(rand(1, 2))->make());
+        });;
     }
 }

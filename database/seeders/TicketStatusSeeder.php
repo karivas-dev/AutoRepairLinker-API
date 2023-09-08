@@ -15,6 +15,7 @@ class TicketStatusSeeder extends Seeder
     public function run(): void
     {
         $status = collect([
+            'No asignado',
             'Asignado',
             'Aceptado',
             'Rechazado',

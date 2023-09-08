@@ -20,6 +20,10 @@ class DatabaseSeeder extends Seeder
             GarageSeeder::class,
             InsurerSeeder::class,
             OwnerSeeder::class,
+            BrandSeeder::class,
+            ModelSeeder::class,
+            ReplacementSeeder::class,
+            UserSeeder::class,
         ]);
         // \App\Models\User::factory(10)->create();
 

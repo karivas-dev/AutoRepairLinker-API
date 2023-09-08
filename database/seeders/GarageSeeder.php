@@ -2,8 +2,9 @@
 
 namespace Database\Seeders;
 
+use App\Models\Branch;
 use App\Models\Garage;
-use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\User;
 use Illuminate\Database\Seeder;
 
 class GarageSeeder extends Seeder
@@ -46,8 +47,13 @@ class GarageSeeder extends Seeder
             "Taller de Automóviles Premium",
         ];
 
-        Garage::factory(count($garageNames))->sequence( fn($sequence) => [
-                'name' => $garageNames[$sequence->index]
-            ])->create();
+        Garage::factory(count($garageNames))->sequence(fn($sequence) => [
+            'name' => $garageNames[$sequence->index]
+        ])->create()->each(function ($garage) {
+            $garage->branches()->saveMany(Branch::factory(rand(1, 5))->make());
+            $garage->branches()->first()->update(['main' => true]);
+
+            $garage->users()->saveMany(User::factory(rand(1, 2))->make());
+        });
     }
 }
