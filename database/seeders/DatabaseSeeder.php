@@ -24,6 +24,11 @@ class DatabaseSeeder extends Seeder
             ModelSeeder::class,
             ReplacementSeeder::class,
             UserSeeder::class,
+            CarSeeder::class,
+            InventorySeeder::class,
+            TicketSeeder::class,
+            BidSeeder::class,
+
         ]);
         // \App\Models\User::factory(10)->create();
 

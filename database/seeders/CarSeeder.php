@@ -2,6 +2,7 @@
 
 namespace Database\Seeders;
 
+use App\Models\Branch;
 use App\Models\Brand;
 use App\Models\Car;
 use App\Models\Owner;
@@ -15,9 +16,10 @@ class CarSeeder extends Seeder
      */
     public function run(): void
     {
-        $brands_id = Brand::pluck('id');
-        $owners_id = Owner::pluck('id');
+        $branchesIds = Branch::whereBranchableType('Insurer')->pluck('id');
 
-        Car::factory()->create();
+        Car::factory(50)->sequence(fn($sqn) => [
+            'branch_id' => $branchesIds->random()
+        ])->create();
     }
 }

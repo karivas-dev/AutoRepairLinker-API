@@ -52,8 +52,6 @@ class GarageSeeder extends Seeder
         ])->create()->each(function ($garage) {
             $garage->branches()->saveMany(Branch::factory(rand(1, 5))->make());
             $garage->branches()->first()->update(['main' => true]);
-
-            $garage->users()->saveMany(User::factory(rand(1, 2))->make());
         });
     }
 }

@@ -32,8 +32,6 @@ class InsurerSeeder extends Seeder
         ])->create()->each(function ($insurer) {
             $insurer->branches()->saveMany(Branch::factory(rand(1, 5))->make());
             $insurer->branches()->first()->update(['main' => true]);
-
-            $insurer->users()->saveMany(User::factory(rand(1, 2))->make());
         });
     }
 }

@@ -53,8 +53,6 @@ class StoreSeeder extends Seeder
         ])->create()->each(function ($store) {
             $store->branches()->saveMany(Branch::factory(rand(1, 5))->make());
             $store->branches()->first()->update(['main' => true]);
-
-            $store->users()->saveMany(User::factory(rand(1, 2))->make());
         });;
     }
 }
