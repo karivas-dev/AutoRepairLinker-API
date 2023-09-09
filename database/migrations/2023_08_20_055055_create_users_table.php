@@ -1,5 +1,6 @@
 <?php
 
+use App\Models\Branch;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -18,14 +19,10 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('telephone')->unique()->nullable();
             $table->string('password');
-            $table->morphs('belongable');
+            $table->foreignIdFor(Branch::class)->constrained();
             $table->rememberToken();
             $table->softDeletes();
             $table->timestamps();
-
-            //$table->foreign('belongable_id', 'belongable_garage_id')->references('id')->on('garages');
-            //$table->foreign('belongable_id', 'belongable_insurer_id')->references('id')->on('insurers');
-            //$table->foreign('belongable_id', 'belongable_store_id')->references('id')->on('stores');
         });
     }
 
