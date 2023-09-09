@@ -25,12 +25,12 @@ class InventoryFactory extends Factory
             InventoryFactory::$store_Ids = Inventory::pluck('id');
         }
         if (InventoryFactory::$replacement_Ids == null) {
-            InventoryFactory::$store_Ids = Replacement::pluck('id');
+            InventoryFactory::$replacement_Ids = Replacement::pluck('id');
         }
         return [
             'replacement_id' => InventoryFactory::$replacement_Ids->random(),
             'quantity' => fake()->randomNumber(3),
-            'unit_price' => fake()->randomFloat(2)
+            'unit_price' => fake()->randomFloat(2, 0, 1000)
         ];
     }
 }

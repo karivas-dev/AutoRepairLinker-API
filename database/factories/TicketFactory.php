@@ -4,8 +4,10 @@ namespace Database\Factories;
 
 use App\Models\Car;
 use App\Models\Garage;
+use App\Models\Insurer;
 use App\Models\Ticket;
 use App\Models\TicketStatus;
+use App\Models\User;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Collection;
 
@@ -27,7 +29,7 @@ class TicketFactory extends Factory
     public function definition(): array
     {
         if (TicketFactory::$user_Ids == null) {
-            TicketFactory::$user_Ids = Ticket::pluck('id');
+            TicketFactory::$user_Ids = User::whereRelation('branch', 'branchable_type','Insurer')->pluck('id');
         }
         if (TicketFactory::$garages == null) {
             TicketFactory::$garages = Garage::all();

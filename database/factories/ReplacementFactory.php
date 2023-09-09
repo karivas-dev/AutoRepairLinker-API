@@ -25,7 +25,7 @@ class ReplacementFactory extends Factory
 
         return [
             'name' => fake()->word(),
-            'description' => fake()->paragraph(3),
+            'description' => fake()->text(255),
             'model_id' => ReplacementFactory::$modelIds->random()
         ];
     }
