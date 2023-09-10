@@ -14,10 +14,12 @@ class BidSeeder extends Seeder
      */
     public function run(): void
     {
-        $ticketsIds = Ticket::whereRelationIn('status', 'name', ['Aceptado', 'Completado'])->pluck('id');
-        dd($ticketsIds);
-        Bid::factory()->sequence(fn() => [
+        $ticketsIds = Ticket::whereRelation('status', 'name', '!=' ,'No asignado')
+            ->orWhereRelation('status', 'name', '!=', 'Asignado')
+            ->pluck('id');
 
+        Bid::factory(25)->sequence(fn($sqn) => [
+            'ticket_id' => $ticketsIds->random()
         ])->create();
     }
 }

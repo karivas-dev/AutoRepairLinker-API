@@ -2,7 +2,8 @@
 
 namespace Database\Seeders;
 
-use App\Models\StatusTicket;
+use App\Models\Bid;
+use App\Models\BidDetails;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
@@ -13,17 +14,6 @@ class BidDetailsSeeder extends Seeder
      */
     public function run(): void
     {
-        $statuses = [
-            'Assigned',
-            'Rejected',
-            'Completed',
-            'Cancelled',
-            'Reassigned',
-            'Accepted'
-        ];
-
-        StatusTicket::factory(count($statuses))
-            ->sequence(fn($sqn) => ['name' => $statuses[$sqn->index]])
-            ->create();
+        BidDetails::factory(Bid::count())->create();
     }
 }
