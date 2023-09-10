@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Models\Bid;
 use Illuminate\Database\Eloquent\Factories\Factory;
 use Illuminate\Support\Collection;
 
@@ -18,10 +19,14 @@ class BidDetailsFactory extends Factory
      */
     public function definition(): array
     {
+        if (BidDetailsFactory::$bid_Ids == null) {
+            BidDetailsFactory::$bid_Ids = Bid::pluck('id');
+        }
+
         return [
             'bid_id' => BidDetailsFactory::$bid_Ids->random(),
-            'name' => fake()->words(3),
-            'price' => fake()->randomFloat(2, 0.00 )
+            'name' => fake()->words(2, true),
+            'price' => fake()->randomFloat(2, 0, 10000)
         ];
     }
 }
