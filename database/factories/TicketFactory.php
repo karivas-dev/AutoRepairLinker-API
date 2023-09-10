@@ -46,7 +46,7 @@ class TicketFactory extends Factory
 
         return [
             'user_id' => TicketFactory::$user_Ids->random(),
-            'description' => fake()->paragraph(3),
+            'description' => fake()->text(255),
             'garage_id' => $garage?->id,
             'car_id' => TicketFactory::$car_Ids->random(),
             'branch_id' => $garage?->branches()->pluck('id')->random(),

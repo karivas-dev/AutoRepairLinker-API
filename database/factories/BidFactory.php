@@ -25,7 +25,7 @@ class BidFactory extends Factory
         }
         return [
             'bid_status_id' => BidFactory::$bid_Status_Ids->random(),
-            'budget' => fake()->randomFloat(2),
+            'budget' => fake()->randomFloat(2, 0, 10000),
             'timespan' => fake()->dateTimeBetween('-10 years', '+10 years'),
         ];
     }

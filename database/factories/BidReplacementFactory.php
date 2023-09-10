@@ -31,7 +31,7 @@ class BidReplacementFactory extends Factory
         return [
             'bid_id' => BidReplacementFactory::$bid_Ids->random(),
             'replacement_id' => BidReplacementFactory::$replacements_Ids->random(),
-            'price' => fake()->randomFloat(2, 0.00),
+            'price' => fake()->randomFloat(2, 0, 10000),
             'quantity' => fake()->randomDigit()
         ];
     }
