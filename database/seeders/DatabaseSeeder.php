@@ -3,6 +3,7 @@
 namespace Database\Seeders;
 
 // use Illuminate\Database\Console\Seeds\WithoutModelEvents;
+use App\Models\BidReplacement;
 use Illuminate\Database\Seeder;
 
 class DatabaseSeeder extends Seeder
@@ -28,6 +29,8 @@ class DatabaseSeeder extends Seeder
             InventorySeeder::class,
             TicketSeeder::class,
             BidSeeder::class,
+            BidDetailsSeeder::class,
+            BidReplacementSeeder::class,
 
         ]);
         // \App\Models\User::factory(10)->create();
