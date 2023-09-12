@@ -6,24 +6,25 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Znck\Eloquent\Traits\BelongsToThrough;
 
 class Ticket extends Model
 {
-    use HasFactory;
+    use HasFactory, BelongsToThrough;
 
     public function bids(): HasMany
     {
         return $this->hasMany(Bid::class);
     }
 
-    public function insurant(): BelongsTo
+    public function user(): BelongsTo
     {
-        return $this->belongsTo(User::class, 'user_id');
+        return $this->belongsTo(User::class);
     }
 
     public function insurer()
     {
-        return $this->insurant->belongable;
+        return $this->belongsToThrough(Insurer::class, [Branch::class, User::class], foreignKeyLookup: [Insurer::class => 'branchable_id']);
     }
 
     public function garage(): BelongsTo
