@@ -10,6 +10,8 @@ class Garage extends Model
 {
     use HasFactory;
 
+    public $fillable = ['name'];
+
     public $timestamps = false;
 
     public function branches(): MorphMany
