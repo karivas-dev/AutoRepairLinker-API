@@ -28,7 +28,8 @@ class TicketController extends Controller
             if ($request->user()->isAdmin) {
                 return new TicketCollection(
                     Ticket::whereRelation('garage', 'id',
-                        $request->user()->branch->branchable_id)->paginate()->withQueryString());
+                        $request->user()->branch->branchable_id)->paginate()->withQueryString()
+                );
             }
             return new TicketCollection(
                 Ticket::whereRelation('garage', 'id',

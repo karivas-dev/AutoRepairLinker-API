@@ -12,6 +12,8 @@ class Brand extends EloquentModel
 
     public $timestamps = false;
 
+    public $guarded = ['id'];
+
     public function models(): HasMany
     {
         return $this->hasMany(Model::class);
