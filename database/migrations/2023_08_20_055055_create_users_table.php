@@ -19,6 +19,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('telephone')->unique()->nullable();
             $table->string('password');
+            $table->boolean('isAdmin')->default(false);
             $table->foreignIdFor(Branch::class)->constrained();
             $table->rememberToken();
             $table->softDeletes();
