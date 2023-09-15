@@ -47,7 +47,8 @@ class UserSeeder extends Seeder
 
         User::factory(count($credentials))->sequence(fn($sqn) => [
             'email' => $credentials[$sqn->index]['email'],
-            'branch_id' => $credentials[$sqn->index]['branch']
+            'branch_id' => $credentials[$sqn->index]['branch'],
+            'isAdmin' => true
         ])->create()->each(function (User $user) use ($credentials) {
             $userFromArray = $credentials->where('email', $user->email)->first();
 
