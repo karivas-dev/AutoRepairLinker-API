@@ -16,12 +16,12 @@ class TicketResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'userId' => $this->user,
+            'user' => $this->whenLoaded('user'),
             'description' => $this->description,
-            'garageId' => $this->garage,
-            'car' => CarResource::collection($this->whenLoaded('car')),
-            'branchId' => $this->branch,
-            'ticketStatusId' => $this->ticket_status,
+            'garage' => $this->whenLoaded('garage'),
+            'car' => CarResource::make($this->whenLoaded('car')),
+            'branch' => $this->whenLoaded('branch'),
+            'status' => $this->ticket_status->name,
             'createdAt' => $this->created_at,
             'updatedAt' => $this->updated_at
         ];

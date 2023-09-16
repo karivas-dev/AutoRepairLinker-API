@@ -42,8 +42,8 @@ class Ticket extends Model
         return $this->belongsTo(Car::class);
     }
 
-    public function status(): BelongsTo
+    public function ticket_status(): BelongsTo
     {
-        return $this->belongsTo(TicketStatus::class, 'ticket_status_id');
+        return $this->belongsTo(TicketStatus::class);
     }
 }
