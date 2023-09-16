@@ -17,23 +17,15 @@ class TicketController extends Controller
      */
     public function index(Request $request)
     {
-        if ($request->user()->branch->branchable_type == 'Insurer') {
-            return new TicketCollection(
-                Ticket::whereRelation('insurer', 'insurers.id',
-                    $request->user()->branch->branchable_id)->paginate()->withQueryString()
-            );
-        }
+        $branch_id = $request->user()->branch->branchable_id;
+        $branch_type = strtolower($request->user()->branch->branchable_type);
 
-        if ($request->user()->branch->branchable_type == 'Garage') {
-            if ($request->user()->isAdmin) {
-                return new TicketCollection(
-                    Ticket::whereRelation('garage', 'id',
-                        $request->user()->branch->branchable_id)->paginate()->withQueryString());
-            }
-            return new TicketCollection(
-                Ticket::whereRelation('garage', 'id',
-                    $request->user()->branch->branchable_id)->where('garage_id', $request->user()->branch_id)->paginate()->withQueryString());
-        }
+        return TicketResource::collection(
+            Ticket::whereRelation($branch_type,  $branch_type.'s.id', $branch_id)
+                ->when(!$request->user()->isAdmin && $branch_type == 'garage', function ($query) use($request) {
+                    $query->where('branch_id', $request->user()->branch_id);
+                })->with(['ticket_status'])->paginate()->withQueryString()
+        );
     }
 
     /**
