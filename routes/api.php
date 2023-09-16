@@ -3,6 +3,7 @@
 use App\Http\Controllers\API\v1\AuthController;
 use App\Http\Controllers\API\v1\BrandController;
 use App\Http\Controllers\API\v1\GarageController;
+use App\Http\Controllers\API\v1\StoreController;
 use App\Http\Controllers\API\v1\TicketController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
@@ -31,5 +32,6 @@ Route::middleware('auth:sanctum')->group(function () {
         Route::apiResource('garages', GarageController::class);
         Route::apiResource('tickets', TicketController::class);
         Route::apiResource('brands', BrandController::class);
+        Route::apiResource('stores', StoreController::class);
     });
 });
