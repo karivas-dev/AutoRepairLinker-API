@@ -34,7 +34,7 @@ class UserSeeder extends Seeder
             [
                 'email' => 'garage@garage.com',
                 'branch' => Branch::whereBranchableType('Garage')->first(),
-                'token' => '4d84e4774ddfd0ab5e8c272deed8fe1bf5420af9c96660993097653ee4209fc8',
+                'token' => '4df099f6f76c68c2e4d465a877111e10c6800573ae4e5c240ba2542c314e65cc',
                 'created_at' => '2023-09-10T18:45:09.000000Z'
             ],
             [
