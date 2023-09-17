@@ -17,12 +17,12 @@ class CarResource extends JsonResource
         return [
             'id' => $this->id,
             'plates' => $this->plates,
-            'serialNumber' => $this->serial_number,
-            'ownerId' => $this->owner_id,
-            'modelId' => $this->model_id,
-            'branchId' => $this->branch_id,
-            'createdAt' => $this->created_at,
-            'updatedAt' => $this->updated_at
+            'serial_number' => $this->serial_number,
+            'owner_id' => $this->owner_id,
+            'model_id' => $this->model_id,
+            'branch_id' => $this->branch_id,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at
         ];
     }
 }

@@ -25,6 +25,7 @@ return new class extends Migration
             $table->foreignIdFor(Branch::class)->nullable()->constrained();
             $table->foreignIdFor(TicketStatus::class)->constrained();
             $table->timestamps();
+            $table->softDeletes();
         });
     }
 

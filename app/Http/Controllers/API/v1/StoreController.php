@@ -3,6 +3,7 @@
 namespace App\Http\Controllers\API\v1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\v1\StoreResource;
 use App\Models\Store;
 use Illuminate\Http\Request;
 
@@ -13,7 +14,7 @@ class StoreController extends Controller
      */
     public function index()
     {
-        return Store::paginate()->withQueryString();
+        return StoreResource::collection(Store::paginate()->withQueryString());
     }
 
     /**
@@ -25,15 +26,17 @@ class StoreController extends Controller
             'name' => 'required|string|max:255'
         ]);
 
-        if (Store::create($attributes)) {
+        $store = Store::create($attributes);
+        if ($store) {
             return response()->json([
-                'status' => 200,
-                'message' => 'La tienda se añadió correctamente.'
+                'message' => 'La tienda se añadió correctamente.',
+                'data' => [
+                    'id' => $store->id,
+                ]
             ]);
-        };
+        }
 
         return response()->json([
-            'status' => 500,
             'message' => "No se puedo añadir la tienda."
         ], 500);
     }
@@ -43,10 +46,7 @@ class StoreController extends Controller
      */
     public function show(Store $store)
     {
-        return response()->json([
-            'status' => 200,
-            'data' => $store
-        ]);
+        return new StoreResource($store);
     }
 
     /**
@@ -60,7 +60,6 @@ class StoreController extends Controller
 
         $store->update($attributes);
         return response()->json([
-            'status' => 200,
             'message' => 'La tienda se actualizó correctamente.'
         ]);
     }
@@ -68,11 +67,10 @@ class StoreController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Store $store)
+    public function destroy($store)
     {
         return response()->json([
-            'status' => 405,
             'message' => 'Esta acción no es permitida'
-        ]);
+        ], 405);
     }
 }

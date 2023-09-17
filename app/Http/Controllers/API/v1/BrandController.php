@@ -3,11 +3,9 @@
 namespace App\Http\Controllers\API\v1;
 
 use App\Http\Controllers\Controller;
-use App\Http\Resources\v1\BrandCollection;
 use App\Http\Resources\v1\BrandResource;
 use App\Models\Brand;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Validator;
 
 class BrandController extends Controller
 {
@@ -16,9 +14,7 @@ class BrandController extends Controller
      */
     public function index()
     {
-        return new BrandCollection(
-            Brand::paginate()->withQueryString()
-        );
+        return BrandResource::collection(Brand::paginate()->withQueryString());
     }
 
     /**
@@ -30,14 +26,17 @@ class BrandController extends Controller
             'name' => 'required|string|max:255'
         ]);
 
-        if (Brand::create($attributes)) {
+        $brand = Brand::create($attributes);
+        if ($brand) {
             return response()->json([
-                'message' => 'La marca se añadió correctamente.'
+                'message' => 'La marca se añadió correctamente.',
+                'data' => [
+                    'id' => $brand->id
+                ]
             ]);
         }
 
         return response()->json([
-            'status' => 500,
             'message' => "No se puedo añadir la marca."
         ], 500);
     }
@@ -62,7 +61,6 @@ class BrandController extends Controller
         $brand->update($attributes);
 
         return response()->json([
-            'status' => 200,
             'message' => "La marca se actualizó correctamente."
         ]);
     }
@@ -70,10 +68,9 @@ class BrandController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Brand $brand)
+    public function destroy($brand)
     {
         return response()->json([
-            'status' => 405,
             'message' => "Esta acción no es permitida"
         ], 405);
     }

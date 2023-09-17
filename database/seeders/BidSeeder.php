@@ -14,8 +14,8 @@ class BidSeeder extends Seeder
      */
     public function run(): void
     {
-        $ticketsIds = Ticket::whereRelation('status', 'name', '!=' ,'No asignado')
-            ->orWhereRelation('status', 'name', '!=', 'Asignado')
+        $ticketsIds = Ticket::whereRelation('ticket_status', 'name', '!=' ,'No asignado')
+            ->orWhereRelation('ticket_status', 'name', '!=', 'Asignado')
             ->pluck('id');
 
         Bid::factory(25)->sequence(fn($sqn) => [

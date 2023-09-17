@@ -3,12 +3,9 @@
 namespace App\Http\Controllers\API\v1;
 
 use App\Http\Controllers\Controller;
-use App\Models\Insurer;
+use App\Http\Resources\v1\TicketResource;
 use App\Models\Ticket;
 use Illuminate\Http\Request;
-use App\Http\Resources\v1\TicketResource;
-use App\Http\Resources\v1\TicketCollection;
-use Illuminate\Support\Facades\Auth;
 
 class TicketController extends Controller
 {
@@ -21,10 +18,10 @@ class TicketController extends Controller
         $branch_type = strtolower($request->user()->branch->branchable_type);
 
         return TicketResource::collection(
-            Ticket::whereRelation($branch_type,  $branch_type.'s.id', $branch_id)
-                ->when(!$request->user()->isAdmin && $branch_type == 'garage', function ($query) use($request) {
+            Ticket::whereRelation($branch_type, $branch_type.'s.id', $branch_id)
+                ->when(!$request->user()->isAdmin && $branch_type == 'garage', function ($query) use ($request) {
                     $query->where('branch_id', $request->user()->branch_id);
-                })->with(['ticket_status'])->paginate()->withQueryString()
+                })->with(['ticket_status', 'garage'])->paginate()->withQueryString()
         );
     }
 
@@ -33,7 +30,28 @@ class TicketController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $attributes = $request->validate([
+            'user_id' => 'required|integer|exists:users,id',
+            'description' => 'required|string|max:255',
+            'garage_id' => 'required|integer|exists:garages,id',
+            'car_id' => 'required|integer|exists:cars,id',
+            'branch_id' => 'nullable|integer|exists:branches,id',
+            'ticket_status_id' => 'required|integer|exists:ticket_statuses,id'
+        ]);
+
+        $ticket = Ticket::create($attributes);
+        if ($ticket) {
+            return response()->json([
+                'message' => 'El taller se añadió correctamente.',
+                'data' => [
+                    'id' => $ticket->id
+                ]
+            ]);
+        }
+
+        return response()->json([
+            'message' => "No se puedo añadir el taller."
+        ], 500);
     }
 
     /**
@@ -41,7 +59,7 @@ class TicketController extends Controller
      */
     public function show(Ticket $ticket)
     {
-        return new TicketResource($ticket);
+        return new TicketResource($ticket->load(['user', 'garage', 'car', 'branch']));
     }
 
     /**
@@ -49,7 +67,20 @@ class TicketController extends Controller
      */
     public function update(Request $request, Ticket $ticket)
     {
-        //
+        $attributes = $request->validate([
+            'user_id' => 'required|integer|exists:users,id',
+            'description' => 'required|string|max:255',
+            'garage_id' => 'required|integer|exists:garages,id',
+            'car_id' => 'required|integer|exists:cars,id',
+            'branch_id' => 'nullable|integer|exists:branches,id',
+            'ticket_status_id' => 'required|integer|exists:ticket_statuses,id'
+        ]);
+
+        $ticket->update($attributes);
+
+        return response()->json([
+            'message' => 'El ticket se actualizó correctamente.'
+        ]);
     }
 
     /**
@@ -57,6 +88,10 @@ class TicketController extends Controller
      */
     public function destroy(Ticket $ticket)
     {
-        //
+        $ticket->delete();
+
+        return response()->json([
+            'message' => 'Ticket eliminado correctamente.'
+        ]);
     }
 }

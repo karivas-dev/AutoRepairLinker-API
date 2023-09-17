@@ -24,14 +24,11 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::post('login', [AuthController::class, 'store']);
+Route::post('logout', [AuthController::class, 'destroy'])->middleware('auth:sanctum');
 
-Route::middleware('auth:sanctum')->group(function () {
-    Route::post('logout', [AuthController::class, 'destroy']);
-
-    Route::prefix('v1')->group(function () {
-        Route::apiResource('garages', GarageController::class);
-        Route::apiResource('tickets', TicketController::class);
-        Route::apiResource('brands', BrandController::class);
-        Route::apiResource('stores', StoreController::class);
-    });
+Route::middleware('auth:sanctum')->prefix('v1')->group(function () {
+    Route::apiResource('garages', GarageController::class);
+    Route::apiResource('tickets', TicketController::class);
+    Route::apiResource('brands', BrandController::class);
+    Route::apiResource('stores', StoreController::class);
 });

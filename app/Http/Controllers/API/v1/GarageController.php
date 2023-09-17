@@ -3,9 +3,9 @@
 namespace App\Http\Controllers\API\v1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\v1\GarageResource;
 use App\Models\Garage;
 use Illuminate\Http\Request;
-use mysql_xdevapi\Exception;
 
 class GarageController extends Controller
 {
@@ -14,7 +14,7 @@ class GarageController extends Controller
      */
     public function index()
     {
-        return Garage::paginate()->withQueryString();
+        return GarageResource::collection(Garage::paginate()->withQueryString());
     }
 
     /**
@@ -26,15 +26,17 @@ class GarageController extends Controller
             'name' => 'required|string|max:255'
         ]);
 
-        if (Garage::create($attributes)) {
+        $garage = Garage::create($attributes);
+        if ($garage) {
             return response()->json([
-                'status' => 200,
-                'message' => 'El taller se añadió correctamente.'
+                'message' => 'El taller se añadió correctamente.',
+                'data' => [
+                    'id' => $garage->id
+                ]
             ]);
         }
 
         return response()->json([
-            'status' => 500,
             'message' => "No se puedo añadir el taller."
         ], 500);
     }
@@ -44,10 +46,7 @@ class GarageController extends Controller
      */
     public function show(Garage $garage)
     {
-        return response()->json([
-            'status' => 200,
-            'data' => $garage
-        ]);
+        return new GarageResource($garage);
     }
 
     /**
@@ -62,7 +61,6 @@ class GarageController extends Controller
         $garage->update($attributes);
 
         return response()->json([
-            'status' => 200,
             'message' => 'El taller se actualizó correctamente.'
         ]);
     }
@@ -70,10 +68,9 @@ class GarageController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Garage $garage)
+    public function destroy($garage)
     {
         return response()->json([
-            'status' => 405,
             'message' => "Esta acción no es permitida"
         ], 405);
     }

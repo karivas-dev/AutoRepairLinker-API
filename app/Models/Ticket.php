@@ -6,11 +6,12 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
+use Illuminate\Database\Eloquent\SoftDeletes;
 use Znck\Eloquent\Traits\BelongsToThrough;
 
 class Ticket extends Model
 {
-    use HasFactory, BelongsToThrough;
+    use HasFactory, BelongsToThrough, SoftDeletes;
 
     public function bids(): HasMany
     {

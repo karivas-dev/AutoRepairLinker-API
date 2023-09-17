@@ -22,8 +22,8 @@ class TicketResource extends JsonResource
             'car' => CarResource::make($this->whenLoaded('car')),
             'branch' => $this->whenLoaded('branch'),
             'status' => $this->ticket_status->name,
-            'createdAt' => $this->created_at,
-            'updatedAt' => $this->updated_at
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at
         ];
     }
 }
