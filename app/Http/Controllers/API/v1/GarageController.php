@@ -9,6 +9,11 @@ use Illuminate\Http\Request;
 
 class GarageController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Garage::class, 'garage');
+    }
+
     /**
      * Display a listing of the resource.
      */
