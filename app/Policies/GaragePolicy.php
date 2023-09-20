@@ -14,7 +14,7 @@ class GaragePolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->branch->branchable_type == "Insurer";
+        return true;
     }
 
     /**
