@@ -2,6 +2,7 @@
 
 namespace App\Policies;
 
+use App\Models\Branch;
 use App\Models\Garage;
 use App\Models\User;
 use Illuminate\Auth\Access\Response;
@@ -19,7 +20,7 @@ class GaragePolicy
     /**
      * Determine whether the user can view the model.
      */
-    public function view(User $user, Garage $garage): bool
+    public function view(User $user, $garage): bool
     {
         return true;
     }
@@ -35,15 +36,19 @@ class GaragePolicy
     /**
      * Determine whether the user can update the model.
      */
-    public function update(User $user, Garage $garage): bool
+    public function update(User $user, $garage): bool
     {
-        return $user->isAdmin && $user->branch_id == "Insurer";
+        return $user->isAdmin &&
+            ($user->branch->branchable_type == "Insurer" ||
+                ($user->branch->branchable_type == "Garage" &&
+                    $user->branch->branchable->main)
+            );
     }
 
     /**
      * Determine whether the user can delete the model.
      */
-    public function delete(User $user, Garage $garage): bool
+    public function delete(User $user, $garage): bool
     {
         return false;
     }
@@ -51,7 +56,7 @@ class GaragePolicy
     /**
      * Determine whether the user can restore the model.
      */
-    public function restore(User $user, Garage $garage): bool
+    public function restore(User $user, $garage): bool
     {
         return false;
     }
@@ -59,7 +64,7 @@ class GaragePolicy
     /**
      * Determine whether the user can permanently delete the model.
      */
-    public function forceDelete(User $user, Garage $garage): bool
+    public function forceDelete(User $user, $garage): bool
     {
         return false;
     }
