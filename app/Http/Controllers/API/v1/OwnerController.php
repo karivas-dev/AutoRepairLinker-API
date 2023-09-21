@@ -1,0 +1,83 @@
+<?php
+
+namespace App\Http\Controllers\API\v1;
+
+use App\Http\Controllers\Controller;
+use App\Models\Owner;
+use Illuminate\Http\Request;
+
+class OwnerController extends Controller
+{
+    /**
+     * Display a listing of the resource.
+     */
+    public function index()
+    {
+        //
+    }
+
+    /**
+     * Store a newly created resource in storage.
+     */
+    public function store(Request $request)
+    {
+        $attributes = $request->validate([
+            'firstname' => 'required|string|max:255',
+            'lastname' => 'required|string|max:255',
+            'email' => 'required|email|max:255',
+            'telephone' => 'required',
+            'district_id' => 'required|exists:districts,id'
+        ]);
+
+        $owner = Owner::create($attributes);
+        if ($owner) {
+            return response()->json([
+                'message' => 'El cliente se añadió correctamente.',
+                'data' => [
+                    'id' => $owner->id,
+                ]
+            ]);
+        }
+
+        return response()->json([
+            'message' => "No se puede añadir el cliente."
+        ], 500);
+    }
+
+    /**
+     * Display the specified resource.
+     */
+    public function show(Owner $owner)
+    {
+        return $owner;
+    }
+
+    /**
+     * Update the specified resource in storage.
+     */
+    public function update(Request $request, Owner $owner)
+    {
+        $attributes = $request->validate([
+            'firstname' => 'nullable|string|max:255',
+            'lastname' => 'nullable|string|max:255',
+            'email' => 'nullable|email|unique:owners,email|max:255',
+            'telephone' => 'nullable|unique:owners,telephone|max:255',
+            'district_id' => 'nullable|exists:districts,id'
+        ]);
+
+        $owner->update($attributes);
+        return response()->json([
+            'message' => 'El cliente se actualizó correctamente.'
+        ]);
+    }
+
+    /**
+     * Remove the specified resource from storage.
+     */
+    public function destroy($owner)
+    {
+        return response()->json([
+            'message' => 'Esta acción no es permitida'
+        ], 405);
+    }
+}
