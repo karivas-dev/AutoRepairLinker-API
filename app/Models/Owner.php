@@ -12,6 +12,8 @@ use Znck\Eloquent\Traits\BelongsToThrough as BelongsToThroughTrait;
 
 class Owner extends Model
 {
+    public $guarded = ['id'];
+
     use HasFactory, BelongsToThroughTrait, SoftDeletes;
 
     public function cars(): HasMany

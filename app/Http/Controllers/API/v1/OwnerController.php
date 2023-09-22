@@ -3,17 +3,23 @@
 namespace App\Http\Controllers\API\v1;
 
 use App\Http\Controllers\Controller;
+use App\Http\Resources\v1\OwnerResource;
 use App\Models\Owner;
 use Illuminate\Http\Request;
 
 class OwnerController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Owner::class, 'owner');
+    }
+
     /**
      * Display a listing of the resource.
      */
     public function index()
     {
-        //
+        return OwnerResource::collection(Owner::paginate()->withQueryString());
     }
 
     /**
@@ -24,8 +30,8 @@ class OwnerController extends Controller
         $attributes = $request->validate([
             'firstname' => 'required|string|max:255',
             'lastname' => 'required|string|max:255',
-            'email' => 'required|email|max:255',
-            'telephone' => 'required',
+            'email' => 'required|email|unique:owners,email|max:255',
+            'telephone' => 'required|unique:owners,telephone',
             'district_id' => 'required|exists:districts,id'
         ]);
 
@@ -49,7 +55,7 @@ class OwnerController extends Controller
      */
     public function show(Owner $owner)
     {
-        return $owner;
+        return new OwnerResource($owner);
     }
 
     /**
@@ -57,15 +63,21 @@ class OwnerController extends Controller
      */
     public function update(Request $request, Owner $owner)
     {
-        $attributes = $request->validate([
+        $owner->fill($request->validate([
             'firstname' => 'nullable|string|max:255',
             'lastname' => 'nullable|string|max:255',
             'email' => 'nullable|email|unique:owners,email|max:255',
             'telephone' => 'nullable|unique:owners,telephone|max:255',
             'district_id' => 'nullable|exists:districts,id'
-        ]);
+        ]));
 
-        $owner->update($attributes);
+        if (!$owner->isDirty()) {
+            return response()->json([
+                'message' => 'No hay datos que actualizar.'
+            ]);
+        }
+
+        $owner->save();
         return response()->json([
             'message' => 'El cliente se actualizó correctamente.'
         ]);
@@ -74,10 +86,11 @@ class OwnerController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($owner)
+    public function destroy(Owner $owner)
     {
+        $owner->delete();
         return response()->json([
-            'message' => 'Esta acción no es permitida'
-        ], 405);
+            'message' => 'El cliente se eliminó correctamente.'
+        ]);
     }
 }
