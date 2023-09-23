@@ -44,7 +44,7 @@ class BrandPolicy
      */
     public function delete(User $user, $brand): bool
     {
-        return false;
+        return true;
     }
 
     /**
@@ -60,6 +60,6 @@ class BrandPolicy
      */
     public function forceDelete(User $user, $brand): bool
     {
-        return false;
+        return true;
     }
 }
