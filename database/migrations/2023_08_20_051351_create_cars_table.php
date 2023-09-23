@@ -20,6 +20,7 @@ return new class extends Migration {
             $table->foreignIdFor(Owner::class)->constrained();
             $table->foreignIdFor(Model::class)->constrained();
             $table->foreignIdFor(Branch::class)->constrained();
+            $table->softDeletes();
             $table->timestamps();
         });
     }

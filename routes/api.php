@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\API\v1\AuthController;
 use App\Http\Controllers\API\v1\BrandController;
+use App\Http\Controllers\API\v1\CarController;
 use App\Http\Controllers\API\v1\GarageController;
 use App\Http\Controllers\API\v1\OwnerController;
 use App\Http\Controllers\API\v1\StoreController;
@@ -33,4 +34,5 @@ Route::middleware('auth:sanctum')->prefix('v1')->group(function () {
     Route::apiResource('brands', BrandController::class);
     Route::apiResource('stores', StoreController::class);
     Route::apiResource('owners', OwnerController::class);
+    Route::apiResource('cars', CarController::class);
 });
