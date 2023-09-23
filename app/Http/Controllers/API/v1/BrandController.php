@@ -5,7 +5,9 @@ namespace App\Http\Controllers\API\v1;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\v1\BrandResource;
 use App\Models\Brand;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class BrandController extends Controller
 {
@@ -17,9 +19,17 @@ class BrandController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return BrandResource::collection(Brand::paginate()->withQueryString());
+        $filters = $request->validate([
+            'search' => 'nullable|string|max:100'
+        ]);
+
+        return BrandResource::collection(
+            Brand::when($filters['search'] ?? false, function (Builder $query) use ($filters) {
+                $query->where('name', 'LIKE', '%'.$filters['search'].'%');
+            })->get()
+        );
     }
 
     /**
@@ -28,7 +38,7 @@ class BrandController extends Controller
     public function store(Request $request)
     {
         $attributes = $request->validate([
-            'name' => 'required|string|max:255'
+            'name' => ['required', 'string', 'max:255', Rule::unique('brands')]
         ]);
 
         $brand = Brand::create($attributes);
@@ -60,7 +70,7 @@ class BrandController extends Controller
     public function update(Request $request, Brand $brand)
     {
         $attributes = $request->validate([
-            'name' => 'required|string|max:255'
+            'name' => ['required', 'string', 'max:255', Rule::unique('brands')->ignore($brand->id)]
         ]);
 
         $brand->update($attributes);
@@ -73,8 +83,14 @@ class BrandController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy($brand)
+    public function destroy(Brand $brand)
     {
+        $brand->delete();
+
+        return response()->json([
+            'message' => ''
+        ]);
+
         return response()->json([
             'message' => "Esta acción no es permitida"
         ], 405);

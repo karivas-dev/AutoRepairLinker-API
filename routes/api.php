@@ -23,8 +23,10 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::post('login', [AuthController::class, 'store']);
-Route::post('logout', [AuthController::class, 'destroy'])->middleware('auth:sanctum');
+Route::post('login', [AuthController::class, 'store'])->name('login');
+Route::post('logout', [AuthController::class, 'destroy'])->middleware('auth:sanctum')->name('logout');
+
+Route::get('ziggy', fn() => response()->json(new \Tightenco\Ziggy\Ziggy()));
 
 Route::middleware('auth:sanctum')->prefix('v1')->group(function () {
     Route::apiResource('garages', GarageController::class);
