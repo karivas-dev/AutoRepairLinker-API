@@ -4,6 +4,7 @@ namespace App\Http\Controllers\API\v1;
 
 use App\Http\Controllers\Controller;
 use App\Http\Resources\v1\ModelResource;
+use App\Models\Brand;
 use App\Models\Model;
 use Illuminate\Http\Request;
 
@@ -17,9 +18,9 @@ class ModelController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Brand $brand)
     {
-        return ModelResource::collection(Model::paginate()->withQueryString());
+        return ModelResource::collection(Model::where('brand_id', $brand->id)->paginate()->withQueryString());
     }
 
     /**
