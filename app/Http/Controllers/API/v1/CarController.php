@@ -18,10 +18,10 @@ class CarController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index(User $user)
+    public function index(Request $request)
     {
-        $branch_id = $user->branch->branchable_id;
-        $branch_type = strtolower($user->branch->branchable_type);
+        $branch_id = $request->user()->branch->branchable_id;
+        $branch_type = strtolower($request->user()->branch->branchable_type);
 
         return CarResource::collection(
             Car::when($branch_type == 'insurer', function ($query) use ($branch_id) {

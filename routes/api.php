@@ -39,6 +39,5 @@ Route::middleware('auth:sanctum')->prefix('v1')->group(function () {
     Route::apiResource('owners', OwnerController::class);
     Route::apiResource('models', ModelController::class)->except(['index']);
     Route::get('models/brand/{brand}', [ModelController::class, 'index'])->name('models.index');
-    Route::apiResource('cars', CarController::class)->except('index');
-    Route::get('cars/insurer/{user}', [CarController::class, 'index'])->name('cars.index');
+    Route::apiResource('cars', CarController::class);
 });
