@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API\v1;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\v1\CarResource;
 use App\Models\Car;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class CarController extends Controller
@@ -17,9 +18,16 @@ class CarController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(User $user)
     {
-        return CarResource::collection(Car::paginate()->withQueryString());
+        $branch_id = $user->branch->branchable_id;
+        $branch_type = strtolower($user->branch->branchable_type);
+
+        return CarResource::collection(
+            Car::when($branch_type == 'insurer', function ($query) use ($branch_id) {
+                $query->whereRelation('branch', 'branchable_id', $branch_id);
+            })->with(['owner','model.brand'])->paginate()->withQueryString()
+        );
     }
 
     /**
@@ -54,7 +62,7 @@ class CarController extends Controller
      */
     public function show(Car $car)
     {
-        return new CarResource($car);
+        return new CarResource($car->load(['owner', 'model.brand']));
     }
 
     /**
@@ -67,7 +75,8 @@ class CarController extends Controller
             'serial_number' => 'nullable|max:255',
             'owner_id' => 'nullable|exists:owners,id',
             'model_id' => 'nullable|exists:models,id',
-            'branch_id' => 'nullable|exists:branches,id'])
+            'branch_id' => 'nullable|exists:branches,id'
+        ])
         );
 
         if (!$car->isDirty()) {

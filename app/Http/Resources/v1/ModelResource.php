@@ -16,7 +16,8 @@ class ModelResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->name
+            'name' => $this->name,
+            'brand' => BrandResource::make($this->whenLoaded('brand')),
         ];
     }
 }
