@@ -24,6 +24,11 @@ class Car extends EloquentModel
         return $this->belongsTo(Model::class);
     }
 
+    public function branch(): BelongsTo
+    {
+        return $this->belongsTo(Branch::class);
+    }
+
     public function tickets(): HasMany
     {
         return $this->hasMany(Ticket::class);
