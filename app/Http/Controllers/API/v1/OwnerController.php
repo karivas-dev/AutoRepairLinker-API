@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API\v1;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\v1\OwnerResource;
 use App\Models\Owner;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class OwnerController extends Controller
@@ -17,9 +18,16 @@ class OwnerController extends Controller
     /**
      * Display a listing of the resource.
      */
-    public function index()
+    public function index(Request $request)
     {
-        return OwnerResource::collection(Owner::paginate()->withQueryString());
+        $branch_id = $request->user()->branch->branchable_id;
+        $branch_type = strtolower($request->user()->branch->branchable_type);
+
+        return OwnerResource::collection(
+            Owner::when($branch_type == "insurer", function ($query) use ($branch_id) {
+                $query->whereRelation('cars.branch', fn($query) => $query->where('branchable_id', $branch_id));
+            })->paginate()->withQueryString()
+        );
     }
 
     /**
@@ -55,7 +63,7 @@ class OwnerController extends Controller
      */
     public function show(Owner $owner)
     {
-        return new OwnerResource($owner);
+        return new OwnerResource($owner->load('cars'));
     }
 
     /**

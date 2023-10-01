@@ -20,7 +20,8 @@ class OwnerResource extends JsonResource
             'lastname' => $this->lastname,
             'email' => $this->email,
             'telephone' => $this->telephone,
-            'district' => $this->district_id,
+            'district_id' => $this->district_id,
+            'cars' => CarResource::collection($this->whenLoaded('cars')),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at
         ];
