@@ -10,6 +10,7 @@ use Illuminate\Database\Eloquent\Relations\HasOne;
 class Replacement extends EloquentModel
 {
     use HasFactory;
+    protected $guarded = ['id'];
 
     public $timestamps = false;
 

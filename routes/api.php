@@ -6,6 +6,7 @@ use App\Http\Controllers\API\v1\CarController;
 use App\Http\Controllers\API\v1\GarageController;
 use App\Http\Controllers\API\v1\ModelController;
 use App\Http\Controllers\API\v1\OwnerController;
+use App\Http\Controllers\API\v1\ReplacementController;
 use App\Http\Controllers\API\v1\StoreController;
 use App\Http\Controllers\API\v1\TicketController;
 use Illuminate\Http\Request;
@@ -40,4 +41,5 @@ Route::middleware('auth:sanctum')->prefix('v1')->group(function () {
     Route::apiResource('models', ModelController::class)->except(['index']);
     Route::get('models/brand/{brand}', [ModelController::class, 'index'])->name('models.index');
     Route::apiResource('cars', CarController::class);
+    Route::apiResource('replacements', ReplacementController::class);
 });
