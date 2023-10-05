@@ -29,7 +29,7 @@ class BrandSeeder extends Seeder
             "Lexus",
             "Subaru",
             "Jeep",
-            "Tesla",
+            /**"Tesla",
             "Ferrari",
             "Porsche",
             "Maserati",
@@ -87,7 +87,7 @@ class BrandSeeder extends Seeder
             "Nikola",
             "Rivian",
             "Lucid Motors",
-            "Rimac",
+            "Rimac",**/
         ];
 
         Brand::factory(count($brands))->sequence( fn($sequence) => [

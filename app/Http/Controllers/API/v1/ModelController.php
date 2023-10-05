@@ -30,7 +30,7 @@ class ModelController extends Controller
     {
         $attributes = $request->validate([
             'name' => 'required|string|max:255',
-            'brand_id' => 'required|exist:brands,id'
+            'brand_id' => 'required|exists:brands,id'
         ]);
 
         if ($model = Model::create($attributes)) {
@@ -61,7 +61,8 @@ class ModelController extends Controller
     public function update(Request $request, Model $model)
     {
         $model->fill($request->validate([
-            'name' => 'required|string|max:255'
+            'name' => 'nullable|string|max:255',
+            'brand_id' => 'nullable|exists:brands,id'
         ]));
 
         if ($model->isClean()) {
