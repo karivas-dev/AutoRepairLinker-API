@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\v1\AuthController;
+use App\Http\Controllers\API\v1\BranchController;
 use App\Http\Controllers\API\v1\BrandController;
 use App\Http\Controllers\API\v1\CarController;
 use App\Http\Controllers\API\v1\GarageController;
@@ -42,4 +43,5 @@ Route::middleware('auth:sanctum')->prefix('v1')->group(function () {
     Route::get('models/brand/{brand}', [ModelController::class, 'index'])->name('models.index');
     Route::apiResource('cars', CarController::class);
     Route::apiResource('replacements', ReplacementController::class);
+    Route::apiResource('branches', BranchController::class);
 });
