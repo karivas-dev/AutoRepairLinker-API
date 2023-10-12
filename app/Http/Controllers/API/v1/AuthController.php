@@ -36,6 +36,49 @@ class AuthController extends Controller
     }
 
     /**
+     * Authenticates the user with a Google sub
+     */
+    public function google(Request $request)
+    {
+        $request->validate(['google_sub' => 'required|numeric|max_digits:25']);
+
+        $user = User::where('google_sub', $request->google_sub)->first();
+        if ($user != null) {
+            return response()->json([
+                'token' => $user->createToken($request->google_sub)->plainTextToken,
+                'message' => 'Authenticated'
+            ]);
+        }
+
+        return response()->json([
+            'message' => 'Google account is not connected to any existing account',
+        ], 401);
+    }
+
+    /**
+     * Links a Google sub with the logged user
+     */
+    public function linkGoogle(Request $request)
+    {
+        $attributes =  $request->validate([
+            'google_sub' => 'required|numeric|max_digits:25|unique:users'
+        ]);
+
+        $request->user()->update($attributes);
+
+        return response()->json([
+            'message' => 'Google account linked correctly'
+        ]);
+    }
+
+    public function loginChecker()
+    {
+        return response()->json([
+            'message' => 'Token not expired'
+        ]);
+    }
+
+    /**
      * Destroys the token for the authenticated user.
      */
     public function destroy(Request $request)

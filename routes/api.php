@@ -29,11 +29,15 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::post('login', [AuthController::class, 'store'])->name('login');
-Route::post('logout', [AuthController::class, 'destroy'])->middleware('auth:sanctum')->name('logout');
+Route::post('login/google', [AuthController::class, 'google'])->name('login.google');
 
 Route::get('ziggy', fn() => response()->json(new \Tightenco\Ziggy\Ziggy()));
 
 Route::middleware('auth:sanctum')->prefix('v1')->group(function () {
+    Route::get('login/checker', [AuthController::class, 'loginChecker'])->name('login.checker');
+    Route::post('link/google', [AuthController::class, 'linkGoogle'])->name('link.google');
+    Route::post('logout', [AuthController::class, 'destroy'])->name('logout');
+
     Route::apiResource('garages', GarageController::class);
     Route::apiResource('tickets', TicketController::class);
     Route::apiResource('brands', BrandController::class);
@@ -45,3 +49,9 @@ Route::middleware('auth:sanctum')->prefix('v1')->group(function () {
     Route::apiResource('replacements', ReplacementController::class);
     Route::apiResource('branches', BranchController::class);
 });
+
+Route::get('location', fn() => [
+    'states' => \App\Models\State::all(),
+    'towns' => \App\Models\Town::all(),
+    'districts' => \App\Models\District::all()
+])->name('location');

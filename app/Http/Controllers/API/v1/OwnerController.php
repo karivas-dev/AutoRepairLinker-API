@@ -7,6 +7,7 @@ use App\Http\Resources\v1\OwnerResource;
 use App\Models\Owner;
 use App\Models\User;
 use Illuminate\Http\Request;
+use Illuminate\Validation\Rule;
 
 class OwnerController extends Controller
 {
@@ -74,8 +75,8 @@ class OwnerController extends Controller
         $owner->fill($request->validate([
             'firstname' => 'nullable|string|max:255',
             'lastname' => 'nullable|string|max:255',
-            'email' => 'nullable|email|unique:owners,email|max:255',
-            'telephone' => 'nullable|unique:owners,telephone|max:255',
+            'email' => ['nullable','email','max:255', Rule::unique('owners', 'email')->ignore($owner->id)],
+            'telephone' => ['nullable','max:255', Rule::unique('owners', 'telephone')->ignore($owner->id)],
             'district_id' => 'nullable|exists:districts,id'
         ]));
 
