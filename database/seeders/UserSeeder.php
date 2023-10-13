@@ -26,40 +26,41 @@ class UserSeeder extends Seeder
 
         $credentials = collect([
             [
-                'email' => 'insurer@insurer.com',
+                'email' => 'admin@insurer.com',
                 'branch' => Branch::whereBranchableType('Insurer')->first(),
-                'token' => 'd8333c64d3db585a73ead0d895795abc4200499244e4d3c507101ffd79828df8',
-                'created_at' => '2023-09-10T18:44:02.000000Z'
+                'isAdmin' => true
             ],
             [
-                'email' => 'garage@garage.com',
+                'email' => 'employee@insurer.com',
+                'branch' => Branch::whereBranchableType('Insurer')->first(),
+                'isAdmin' => false
+            ],
+            [
+                'email' => 'admin@garage.com',
                 'branch' => Branch::whereBranchableType('Garage')->first(),
-                'token' => '4df099f6f76c68c2e4d465a877111e10c6800573ae4e5c240ba2542c314e65cc',
-                'created_at' => '2023-09-10T18:45:09.000000Z'
+                'isAdmin' => true
             ],
             [
-                'email' => 'store@store.com',
+                'email' => 'employee@garage.com',
+                'branch' => Branch::whereBranchableType('Garage')->first(),
+                'isAdmin' => false
+            ],
+            [
+                'email' => 'admin@store.com',
                 'branch' => Branch::whereBranchableType('Store')->first(),
-                'token' => '52866f76d9129e8793a18625f29bf624688aa42a8e664f78fa97ddf2dc1c7f7a',
-                'created_at' => '2023-09-10T18:46:16.000000Z'
+                'isAdmin' => true
+            ],
+            [
+                'email' => 'employee@store.com',
+                'branch' => Branch::whereBranchableType('Store')->first(),
+                'isAdmin' => false
             ],
         ]);
 
         User::factory(count($credentials))->sequence(fn($sqn) => [
             'email' => $credentials[$sqn->index]['email'],
             'branch_id' => $credentials[$sqn->index]['branch'],
-            'isAdmin' => true
-        ])->create()->each(function (User $user) use ($credentials) {
-            $userFromArray = $credentials->where('email', $user->email)->first();
-
-            $user->tokens()->create([
-                'name' => $user->email,
-                'token' => $userFromArray['token'],
-                'abilities' => ["*"],
-                'created_at' => $userFromArray['created_at'],
-                'updated_at' => $userFromArray['created_at']
-            ]);
-        });
+        ])->create();
 
         User::factory(50)->sequence(fn() => [
             'branch_id' => UserSeeder::$branch_Ids->random()

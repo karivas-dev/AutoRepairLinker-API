@@ -44,7 +44,7 @@ class BrandPolicy
      */
     public function delete(User $user, $brand): bool
     {
-        return true;
+        return $user->branch->branchable_type != 'Garage';
     }
 
     /**
@@ -52,7 +52,7 @@ class BrandPolicy
      */
     public function restore(User $user, $brand): bool
     {
-        return false;
+        return $user->branch->branchable_type != 'Garage';
     }
 
     /**

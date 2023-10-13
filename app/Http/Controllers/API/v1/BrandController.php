@@ -48,7 +48,7 @@ class BrandController extends Controller
                 'data' => [
                     'id' => $brand->id
                 ]
-            ]);
+            ], 201);
         }
 
         return response()->json([
@@ -73,7 +73,13 @@ class BrandController extends Controller
             'name' => ['required', 'string', 'max:255', Rule::unique('brands')->ignore($brand->id)]
         ]);
 
-        $brand->update($attributes);
+        $brand->fill($attributes);
+
+        if ($brand->isClean()) {
+            return response()->json([
+                'message' => "No hay datos que actualizar."
+            ]);
+        }
 
         return response()->json([
             'message' => "La marca se actualizó correctamente."
@@ -88,11 +94,7 @@ class BrandController extends Controller
         $brand->delete();
 
         return response()->json([
-            'message' => ''
+            'message' => "La marca se eliminó correctamente."
         ]);
-
-        return response()->json([
-            'message' => "Esta acción no es permitida"
-        ], 405);
     }
 }
