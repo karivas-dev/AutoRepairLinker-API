@@ -9,6 +9,11 @@ use Illuminate\Http\Request;
 
 class TicketController extends Controller
 {
+    public function __construct()
+    {
+        $this->authorizeResource(Ticket::class, 'ticket');
+    }
+
     /**
      * Display a listing of the resource.
      */
@@ -33,7 +38,7 @@ class TicketController extends Controller
         $attributes = $request->validate([
             'user_id' => 'required|integer|exists:users,id',
             'description' => 'required|string|max:255',
-            'garage_id' => 'required|integer|exists:garages,id',
+            'garage_id' => 'nullable|integer|exists:garages,id',
             'car_id' => 'required|integer|exists:cars,id',
             'branch_id' => 'nullable|integer|exists:branches,id',
             'ticket_status_id' => 'required|integer|exists:ticket_statuses,id'
