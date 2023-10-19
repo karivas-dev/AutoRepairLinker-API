@@ -62,7 +62,7 @@ class UserSeeder extends Seeder
             'branch_id' => $credentials[$sqn->index]['branch'],
         ])->create();
 
-        User::factory(50)->sequence(fn() => [
+        User::factory(25)->sequence(fn() => [
             'branch_id' => UserSeeder::$branch_Ids->random()
         ])->create();
     }

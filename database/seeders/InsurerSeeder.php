@@ -30,7 +30,7 @@ class InsurerSeeder extends Seeder
         Insurer::factory(count($insuranceCompanies))->sequence(fn($sequence) => [
             'name' => $insuranceCompanies[$sequence->index]
         ])->create()->each(function ($insurer) {
-            $insurer->branches()->saveMany(Branch::factory(rand(1, 5))->make());
+            $insurer->branches()->saveMany(Branch::factory(rand(1, 3))->make());
             $insurer->branches()->first()->update(['main' => true]);
         });
     }

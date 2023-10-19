@@ -23,11 +23,14 @@ class TicketController extends Controller
         $branch_type = strtolower($request->user()->branch->branchable_type);
 
         return TicketResource::collection(
+            Ticket::whereRelation($branch_type, $branch_type.'s.id')
+        );
+       /* return TicketResource::collection(
             Ticket::whereRelation($branch_type, $branch_type.'s.id', $branch_id)
                 ->when(!$request->user()->isAdmin && $branch_type == 'garage', function ($query) use ($request) {
                     $query->where('branch_id', $request->user()->branch_id);
                 })->with(['ticket_status', 'garage'])->paginate()->withQueryString()
-        );
+        );*/
     }
 
     /**
@@ -73,12 +76,12 @@ class TicketController extends Controller
     public function update(Request $request, Ticket $ticket)
     {
         $attributes = $request->validate([
-            'user_id' => 'required|integer|exists:users,id',
-            'description' => 'required|string|max:255',
-            'garage_id' => 'required|integer|exists:garages,id',
-            'car_id' => 'required|integer|exists:cars,id',
+            'user_id' => 'nullable|integer|exists:users,id',
+            'description' => 'nullable|string|max:255',
+            'garage_id' => 'nullable|integer|exists:garages,id',
+            'car_id' => 'nullable|integer|exists:cars,id',
             'branch_id' => 'nullable|integer|exists:branches,id',
-            'ticket_status_id' => 'required|integer|exists:ticket_statuses,id'
+            'ticket_status_id' => 'nullable|integer|exists:ticket_statuses,id'
         ]);
 
         $ticket->update($attributes);

@@ -25,7 +25,7 @@ class GarageSeeder extends Seeder
             "Garaje Master",
             "Taller de Autos Profesional",
             "AutoCuidado",
-            "Mecánica en Acción",
+            /*"Mecánica en Acción",
             "Taller de Emergencia",
             "Garaje Veloz",
             "AutoServicio Integral",
@@ -44,13 +44,13 @@ class GarageSeeder extends Seeder
             "GarajeMaestro",
             "AutoCura",
             "Mecánica al Instante",
-            "Taller de Automóviles Premium",
+            "Taller de Automóviles Premium",*/
         ];
 
         Garage::factory(count($garageNames))->sequence(fn($sequence) => [
             'name' => $garageNames[$sequence->index]
         ])->create()->each(function ($garage) {
-            $garage->branches()->saveMany(Branch::factory(rand(1, 5))->make());
+            $garage->branches()->saveMany(Branch::factory(rand(1, 3))->make());
             $garage->branches()->first()->update(['main' => true]);
         });
     }

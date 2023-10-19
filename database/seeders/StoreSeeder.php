@@ -25,7 +25,7 @@ class StoreSeeder extends Seeder
             "Piezas Directas",
             "Repuestos a Tu Alcance",
             "Automóviles en Rehabilitación",
-            "Refacciones Amigables",
+            /*"Refacciones Amigables",
             "Todo en Repuestos",
             "Automovilística Rápida",
             "Servicio de Reposición",
@@ -45,13 +45,13 @@ class StoreSeeder extends Seeder
             "Refaccionario Express",
             "Sustitutos Expertos",
             "Autopartes Prontas",
-            "Mundo del Repuesto",
+            "Mundo del Repuesto",*/
         ];
 
         Store::factory(count($replacementStores))->sequence(fn($sequence) => [
             'name' => $replacementStores[$sequence->index]
         ])->create()->each(function ($store) {
-            $store->branches()->saveMany(Branch::factory(rand(1, 5))->make());
+            $store->branches()->saveMany(Branch::factory(rand(1, 3))->make());
             $store->branches()->first()->update(['main' => true]);
         });;
     }
