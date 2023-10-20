@@ -60,6 +60,7 @@ class UserSeeder extends Seeder
         User::factory(count($credentials))->sequence(fn($sqn) => [
             'email' => $credentials[$sqn->index]['email'],
             'branch_id' => $credentials[$sqn->index]['branch'],
+            'isAdmin' => $credentials[$sqn->index]['isAdmin']
         ])->create();
 
         User::factory(25)->sequence(fn() => [

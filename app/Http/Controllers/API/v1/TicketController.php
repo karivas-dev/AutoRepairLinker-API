@@ -5,6 +5,7 @@ namespace App\Http\Controllers\API\v1;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\v1\TicketResource;
 use App\Models\Ticket;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Http\Request;
 
 class TicketController extends Controller
@@ -23,14 +24,11 @@ class TicketController extends Controller
         $branch_type = strtolower($request->user()->branch->branchable_type);
 
         return TicketResource::collection(
-            Ticket::whereRelation($branch_type, $branch_type.'s.id')
-        );
-       /* return TicketResource::collection(
             Ticket::whereRelation($branch_type, $branch_type.'s.id', $branch_id)
                 ->when(!$request->user()->isAdmin && $branch_type == 'garage', function ($query) use ($request) {
-                    $query->where('branch_id', $request->user()->branch_id);
+                    $query->where('garage_id', $request->user()->branch_id);
                 })->with(['ticket_status', 'garage'])->paginate()->withQueryString()
-        );*/
+        );
     }
 
     /**
