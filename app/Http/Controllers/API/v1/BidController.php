@@ -45,6 +45,13 @@ class BidController extends Controller
                 'price' => $detail['price']
             ]);
         }
+
+        return response()->json([
+            'message' => 'La cotización se creo correctamente.',
+            'data' => [
+                'id' => $bid->id,
+            ]
+        ]);
     }
 
     /**
@@ -88,6 +95,13 @@ class BidController extends Controller
                 'price' => $detail['price']
             ]);
         }
+
+        return response()->json([
+            'message' => 'La cotización se actualizo correctamente.',
+            'data' => [
+                'id' => $bid->id,
+            ]
+        ]);
     }
 
     /**
@@ -96,5 +110,9 @@ class BidController extends Controller
     public function destroy(Bid $bid)
     {
         $bid->delete();
+
+        return response()->json([
+            'message' => 'La cotización se elimino correctamente.',
+        ]);
     }
 }

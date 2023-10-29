@@ -5,7 +5,7 @@ namespace App\Http\Resources\v1;
 use Illuminate\Http\Request;
 use Illuminate\Http\Resources\Json\JsonResource;
 
-class ReplacementResource extends JsonResource
+class InventoryResource extends JsonResource
 {
     /**
      * Transform the resource into an array.
@@ -16,10 +16,10 @@ class ReplacementResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->name,
-            'description' => $this->description,
-            'model' => ModelResource::make($this->whenLoaded('model')),
-            'inventory' => InventoryResource::make($this->whenLoaded('inventory')),
+            'quantity' => $this->quantity,
+            'unit_price' => $this->unit_price,
+            'created_at' => $this->created_at,
+            'updated_at' => $this->updated_at,
         ];
     }
 }

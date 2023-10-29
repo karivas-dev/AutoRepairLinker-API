@@ -6,6 +6,7 @@ use App\Http\Controllers\API\v1\BranchController;
 use App\Http\Controllers\API\v1\BrandController;
 use App\Http\Controllers\API\v1\CarController;
 use App\Http\Controllers\API\v1\GarageController;
+use App\Http\Controllers\API\v1\InventoryController;
 use App\Http\Controllers\API\v1\ModelController;
 use App\Http\Controllers\API\v1\OwnerController;
 use App\Http\Controllers\API\v1\ReplacementController;
@@ -50,6 +51,7 @@ Route::middleware('auth:sanctum')->prefix('v1')->group(function () {
     Route::apiResource('replacements', ReplacementController::class);
     Route::apiResource('branches', BranchController::class);
     Route::apiResource('bids', BidController::class)->except('index');
+    Route::apiResource('inventories', InventoryController::class)->except('index');
 });
 
 Route::get('location', fn() => [
