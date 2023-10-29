@@ -40,8 +40,8 @@ class CarController extends Controller
             'serial_number' => 'required|max:255',
             'owner_id' => 'required|exists:owners,id',
             'model_id' => 'required|exists:models,id',
-            'branch_id' => 'required|exists:branches,id'
         ]);
+        $attributes['branch_id'] = $request->user()->branch->id;
 
         if ($car = Car::create($attributes)) {
             return response()->json([
@@ -76,8 +76,7 @@ class CarController extends Controller
             'owner_id' => 'nullable|exists:owners,id',
             'model_id' => 'nullable|exists:models,id',
             'branch_id' => 'nullable|exists:branches,id'
-        ])
-        );
+        ]));
 
         if (!$car->isDirty()) {
             return response()->json([

@@ -35,9 +35,9 @@ class TicketController extends Controller
             'description' => 'required|string|max:255',
             'garage_id' => 'required|integer|exists:garages,id',
             'car_id' => 'required|integer|exists:cars,id',
-            'branch_id' => 'nullable|integer|exists:branches,id',
             'ticket_status_id' => 'required|integer|exists:ticket_statuses,id'
         ]);
+        $attributes['branch_id'] = $request->user()->branch_id;
 
         $ticket = Ticket::create($attributes);
         if ($ticket) {
@@ -59,7 +59,7 @@ class TicketController extends Controller
      */
     public function show(Ticket $ticket)
     {
-        return new TicketResource($ticket->load(['user', 'garage', 'car', 'branch']));
+        return new TicketResource($ticket->load(['user', 'garage', 'car', 'branch', 'ticket_status', 'bids']));
     }
 
     /**

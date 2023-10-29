@@ -12,6 +12,8 @@ class BidDetails extends Model
 
     public $timestamps = false;
 
+    protected $guarded = ['id'];
+
     public function bid(): BelongsTo
     {
         return $this->belongsTo(Bid::class);

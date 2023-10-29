@@ -82,7 +82,7 @@ class ReplacementController extends Controller
     /**
      * Remove the specified resource from storage.
      */
-    public function destroy(Replacement $replacement)
+    public function destroy()
     {
         return response()->json([
             'message' => "Esta acción no es permitida."

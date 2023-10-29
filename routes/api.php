@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\API\v1\AuthController;
+use App\Http\Controllers\API\v1\BidController;
 use App\Http\Controllers\API\v1\BranchController;
 use App\Http\Controllers\API\v1\BrandController;
 use App\Http\Controllers\API\v1\CarController;
@@ -48,6 +49,7 @@ Route::middleware('auth:sanctum')->prefix('v1')->group(function () {
     Route::apiResource('cars', CarController::class);
     Route::apiResource('replacements', ReplacementController::class);
     Route::apiResource('branches', BranchController::class);
+    Route::apiResource('bids', BidController::class)->except('index');
 });
 
 Route::get('location', fn() => [
