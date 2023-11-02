@@ -16,7 +16,8 @@ class StoreResource extends JsonResource
     {
         return [
             'id' => $this->id,
-            'name' => $this->name
+            'name' => $this->name,
+            'branches' => BranchResource::collection($this->whenLoaded('branches')),
         ];
     }
 }

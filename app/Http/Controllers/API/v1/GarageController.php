@@ -19,7 +19,7 @@ class GarageController extends Controller
      */
     public function index()
     {
-        return GarageResource::collection(Garage::paginate()->withQueryString());
+        return GarageResource::collection(Garage::with('branches')->paginate()->withQueryString());
     }
 
     /**
