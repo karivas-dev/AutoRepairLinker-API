@@ -19,7 +19,7 @@ class GarageController extends Controller
      */
     public function index()
     {
-        return GarageResource::collection(Garage::with('branches')->paginate()->withQueryString());
+        return GarageResource::collection(Garage::paginate()->withQueryString());
     }
 
     /**
@@ -51,7 +51,7 @@ class GarageController extends Controller
      */
     public function show(Garage $garage)
     {
-        return new GarageResource($garage);
+        return new GarageResource($garage->load('branches'));
     }
 
     /**

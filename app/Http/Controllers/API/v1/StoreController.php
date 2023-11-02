@@ -19,7 +19,7 @@ class StoreController extends Controller
      */
     public function index()
     {
-        return StoreResource::collection(Store::with('branches')->paginate()->withQueryString());
+        return StoreResource::collection(Store::paginate()->withQueryString());
     }
 
     /**
@@ -51,7 +51,7 @@ class StoreController extends Controller
      */
     public function show(Store $store)
     {
-        return new StoreResource($store);
+        return new StoreResource($store->load('branches'));
     }
 
     /**

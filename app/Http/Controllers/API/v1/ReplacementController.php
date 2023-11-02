@@ -53,7 +53,7 @@ class ReplacementController extends Controller
      */
     public function show(Replacement $replacement)
     {
-        return new ReplacementResource($replacement->load('model', 'inventory'));
+        return new ReplacementResource($replacement->load('model.brand', 'inventory'));
     }
 
     /**
