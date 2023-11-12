@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\API\v1\AuthController;
 use App\Http\Controllers\API\v1\BidController;
+use App\Http\Controllers\API\v1\BidReplacementController;
 use App\Http\Controllers\API\v1\BranchController;
 use App\Http\Controllers\API\v1\BrandController;
 use App\Http\Controllers\API\v1\CarController;
@@ -55,7 +56,7 @@ Route::middleware('auth:sanctum')->prefix('v1')->group(function () {
     Route::apiResource('branches', BranchController::class);
     Route::apiResource('bids', BidController::class)->except('index');
     Route::apiResource('inventories', InventoryController::class)->except('index');
-    Route::apiResource('bidreplacement', BidReplacement::class)->only('store');
+    Route::apiResource('bidreplacement', BidReplacementController::class)->only('store');
 });
 
 Route::get('location', fn() => [

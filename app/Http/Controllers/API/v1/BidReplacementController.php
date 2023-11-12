@@ -30,7 +30,7 @@ class BidReplacementController extends Controller
             'quantity' => 'required'
         ]);
 
-        $attributes['price'] = Inventory::whereRelation('replacement', $request->replacement_id)->unit_price;
+        $attributes['price'] = Inventory::whereRelation('replacement', 'replacement_id',$request->replacement_id)->first()->unit_price;
         $bidreplacement = BidReplacement::create($attributes);
 
         return response()->json([
