@@ -14,7 +14,7 @@ return new class extends Migration
     {
         Schema::create('bid_details', function (Blueprint $table) {
             $table->id();
-            $table->foreignIdFor(Bid::class)->constrained();
+            $table->foreignIdFor(Bid::class)->constrained()->cascadeOnDelete();
             $table->string('name');
             $table->decimal('price');
         });

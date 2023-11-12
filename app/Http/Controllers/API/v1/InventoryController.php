@@ -15,12 +15,13 @@ class InventoryController extends Controller
     public function store(Request $request)
     {
         $attributes = $request->validate([
-            'branch_id' => 'required|integer|exists:branches,id',
+            /*'branch_id' => 'required|integer|exists:branches,id',*/
             'replacement_id' => 'required|integer|exists:replacements,id',
             'quantity' => 'required|integer|min:0',
             'unit_price' => 'required|numeric|min:0',
         ]);
 
+        $attributes['branch_id'] = $request->user()->branch->id;
         $inventory = Inventory::create($attributes);
 
         return response()->json([
