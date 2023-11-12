@@ -8,4 +8,7 @@ use Illuminate\Database\Eloquent\Model;
 class BidReplacement extends Model
 {
     use HasFactory;
+
+    protected $guarded = ['id'];
+
 }
