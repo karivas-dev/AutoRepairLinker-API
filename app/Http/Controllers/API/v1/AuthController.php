@@ -23,6 +23,8 @@ class AuthController extends Controller
         if (Auth::attempt($attributes)) {
             return response()->json([
                 'token' => $request->user()->createToken($request->email)->plainTextToken,
+                'type' => $request->user()->branch->branchable_type,
+                'admin' => $request->user()->isAdmin,
                 'message' => 'Authenticated'
             ]);
         }
@@ -46,6 +48,8 @@ class AuthController extends Controller
         if ($user != null) {
             return response()->json([
                 'token' => $user->createToken($request->google_sub)->plainTextToken,
+                'type' => $request->user()->branch->branchable_type,
+                'admin' => $request->user()->isAdmin,
                 'message' => 'Authenticated'
             ]);
         }
