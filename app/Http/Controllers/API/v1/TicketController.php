@@ -31,18 +31,19 @@ class TicketController extends Controller
     public function store(Request $request)
     {
         $attributes = $request->validate([
-            'user_id' => 'required|integer|exists:users,id',
+            /*'user_id' => 'required|integer|exists:users,id',*/
             'description' => 'required|string|max:255',
             'garage_id' => 'required|integer|exists:garages,id',
             'car_id' => 'required|integer|exists:cars,id',
             'ticket_status_id' => 'required|integer|exists:ticket_statuses,id'
         ]);
+        $attributes['user_id'] = $request->user()->id;
         $attributes['branch_id'] = $request->user()->branch_id;
 
         $ticket = Ticket::create($attributes);
         if ($ticket) {
             return response()->json([
-                'message' => 'El taller se añadió correctamente.',
+                'message' => 'El ticket se añadió correctamente.',
                 'data' => [
                     'id' => $ticket->id
                 ]

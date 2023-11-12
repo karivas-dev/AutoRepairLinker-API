@@ -22,6 +22,7 @@ class TicketResource extends JsonResource
             'garage' => $this->whenLoaded('garage'),
             'car' => CarResource::make($this->whenLoaded('car')),
             'branch' => $this->whenLoaded('branch'),
+            'status_id' => $this->ticket_status->id,
             'status' => $this->ticket_status->name,
             'bids' => $this->ifLoaded('bids', fn ($b) => $b->map(fn ($bid) => $bid->id)),
             'created_at' => $this->created_at,

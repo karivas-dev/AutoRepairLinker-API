@@ -12,6 +12,8 @@ use App\Http\Controllers\API\v1\OwnerController;
 use App\Http\Controllers\API\v1\ReplacementController;
 use App\Http\Controllers\API\v1\StoreController;
 use App\Http\Controllers\API\v1\TicketController;
+use App\Models\BidStatus;
+use App\Models\TicketStatus;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -59,3 +61,8 @@ Route::get('location', fn() => [
     'towns' => \App\Models\Town::all(),
     'districts' => \App\Models\District::all()
 ])->name('location');
+
+Route::get('ticket-statuses', fn() => ['ticket_statuses' => TicketStatus::all()])
+    ->name('ticket.statuses');
+Route::get('bid-statuses', fn() => ['bid_statuses' => BidStatus::all()])
+    ->name('bid.statuses');

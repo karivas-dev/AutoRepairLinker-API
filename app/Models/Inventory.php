@@ -9,7 +9,7 @@ use Illuminate\Database\Eloquent\Relations\BelongsTo;
 class Inventory extends Model
 {
     use HasFactory;
-
+    protected $guarded = ['id'];
     public function store(): BelongsTo
     {
         return $this->belongsTo(Store::class);
