@@ -17,9 +17,9 @@ class BidReplacementResource extends JsonResource
         return [
             'id' => $this->id,
             'bid_id' => $this->bid_id,
-            'replacement_id' => $this->replacement_id,
+            'replacement' => ReplacementResource::make($this->replacement),
             'price' => $this->price,
-            'quantity' => $this->quantity
+            'quantity' => $this->quantity,
         ];
     }
 }

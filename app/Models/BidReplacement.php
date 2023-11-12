@@ -4,6 +4,7 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
+use Illuminate\Database\Eloquent\Relations\BelongsTo;
 
 class BidReplacement extends Model
 {
@@ -11,4 +12,8 @@ class BidReplacement extends Model
 
     protected $guarded = ['id'];
 
+    public function replacement(): BelongsTo
+    {
+        return $this->belongsTo(Replacement::class);
+    }
 }

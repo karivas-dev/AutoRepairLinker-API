@@ -12,6 +12,7 @@ use App\Http\Controllers\API\v1\OwnerController;
 use App\Http\Controllers\API\v1\ReplacementController;
 use App\Http\Controllers\API\v1\StoreController;
 use App\Http\Controllers\API\v1\TicketController;
+use App\Models\BidReplacement;
 use App\Models\BidStatus;
 use App\Models\TicketStatus;
 use Illuminate\Http\Request;
@@ -54,6 +55,7 @@ Route::middleware('auth:sanctum')->prefix('v1')->group(function () {
     Route::apiResource('branches', BranchController::class);
     Route::apiResource('bids', BidController::class)->except('index');
     Route::apiResource('inventories', InventoryController::class)->except('index');
+    Route::apiResource('bidreplacement', BidReplacement::class)->only('store');
 });
 
 Route::get('location', fn() => [
