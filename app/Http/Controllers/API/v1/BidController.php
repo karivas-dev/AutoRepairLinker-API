@@ -59,7 +59,7 @@ class BidController extends Controller
      */
     public function show(Bid $bid)
     {
-        return BidResource::make($bid->load('status', 'details'));
+        return BidResource::make($bid->load('status', 'details', 'replacements'));
     }
 
     /**

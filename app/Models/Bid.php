@@ -27,4 +27,9 @@ class Bid extends Model
     {
         return $this->hasMany(BidDetails::class);
     }
+
+    public function replacements(): HasMany
+    {
+        return  $this->hasMany(BidReplacement::class);
+    }
 }
