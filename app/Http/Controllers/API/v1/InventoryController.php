@@ -15,7 +15,7 @@ class InventoryController extends Controller
     public function index(Request $request)
     {
         return InventoryResource::collection(Inventory::where('quantity', '>', 0)
-            ->with('replacement')->get());
+            ->with('replacement', 'branch')->get());
     }
     /**
      * Store a newly created resource in storage.

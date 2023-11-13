@@ -5,14 +5,16 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
+use Znck\Eloquent\Relations\BelongsToThrough;
 
 class Inventory extends Model
 {
     use HasFactory;
     protected $guarded = ['id'];
-    public function store(): BelongsTo
+
+    public function branch(): BelongsTo
     {
-        return $this->belongsTo(Store::class);
+        return $this->belongsTo(Branch::class);
     }
 
     public function replacement(): BelongsTo

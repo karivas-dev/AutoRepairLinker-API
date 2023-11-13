@@ -27,16 +27,26 @@ class BidReplacementController extends Controller
         $attributes = $request->validate([
             'bid_id' => 'required|integer|exists:bids,id',
             'replacement_id' => 'required|integer|exists:replacements,id',
-            'quantity' => 'required'
+            'quantity' => 'required|integer',
+            'price' => 'required'
         ]);
 
-        $attributes['price'] = Inventory::whereRelation('replacement', 'replacement_id',$request->replacement_id)->first()->unit_price;
+        $inventory = Inventory::where('id', $request->inventory_id)->first();
+
+        if ($request->quantity > $inventory->quantity)
+        {
+            return response()->json([
+                'message' => 'No hay suficientes repuestos disponibles.',
+            ]);
+        }
+
         $bidreplacement = BidReplacement::create($attributes);
 
         return response()->json([
             'message' => 'Se añadió el repuesto correctamente.',
             'data' => [
                 'id' => $bidreplacement->id,
+                'inventory' => $inventory
             ]
         ]);
     }
