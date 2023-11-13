@@ -18,6 +18,7 @@ class InventoryResource extends JsonResource
             'id' => $this->id,
             'quantity' => $this->quantity,
             'unit_price' => $this->unit_price,
+            'replacement' => $this->whenLoaded('replacement'),
             'created_at' => $this->created_at,
             'updated_at' => $this->updated_at,
         ];

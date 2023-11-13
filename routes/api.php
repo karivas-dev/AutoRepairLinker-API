@@ -55,7 +55,7 @@ Route::middleware('auth:sanctum')->prefix('v1')->group(function () {
     Route::apiResource('replacements', ReplacementController::class);
     Route::apiResource('branches', BranchController::class);
     Route::apiResource('bids', BidController::class)->except('index');
-    Route::apiResource('inventories', InventoryController::class)->except('index');
+    Route::apiResource('inventories', InventoryController::class);
     Route::apiResource('bidreplacement', BidReplacementController::class)->only('store');
 });
 

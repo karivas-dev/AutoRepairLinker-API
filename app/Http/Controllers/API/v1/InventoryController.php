@@ -10,6 +10,14 @@ use Illuminate\Http\Request;
 class InventoryController extends Controller
 {
     /**
+     * Display a listing of the resource.
+     */
+    public function index(Request $request)
+    {
+        return InventoryResource::collection(Inventory::where('quantity', '>', 0)
+            ->with('replacement')->get());
+    }
+    /**
      * Store a newly created resource in storage.
      */
     public function store(Request $request)
