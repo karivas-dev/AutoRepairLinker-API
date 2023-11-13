@@ -37,7 +37,7 @@ class BidReplacementController extends Controller
         {
             return response()->json([
                 'message' => 'No hay suficientes repuestos disponibles.',
-            ]);
+            ], 400);
         }
 
         $bidreplacement = BidReplacement::create($attributes);
