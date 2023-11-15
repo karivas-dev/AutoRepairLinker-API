@@ -69,14 +69,14 @@ class TicketController extends Controller
     public function update(Request $request, Ticket $ticket)
     {
         $attributes = $request->validate([
-            'user_id' => 'required|integer|exists:users,id',
+            /* 'user_id' => 'required|integer|exists:users,id', */
             'description' => 'required|string|max:255',
             'garage_id' => 'required|integer|exists:garages,id',
             'car_id' => 'required|integer|exists:cars,id',
             'branch_id' => 'nullable|integer|exists:branches,id',
             'ticket_status_id' => 'required|integer|exists:ticket_statuses,id'
         ]);
-
+        $attributes['user_id'] = $request->user()->id;
         $ticket->update($attributes);
 
         return response()->json([

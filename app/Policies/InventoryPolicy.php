@@ -13,7 +13,7 @@ class InventoryPolicy
      */
     public function viewAny(User $user): bool
     {
-        return $user->branch->branchable_type == "Store";
+        return $user->branch->branchable_type == "Garage";
     }
 
     /**

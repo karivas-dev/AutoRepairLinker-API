@@ -16,7 +16,7 @@ return new class extends Migration
         Schema::create('bid_replacements', function (Blueprint $table) {
             $table->id();
             $table->foreignIdFor(Bid::class)->constrained();
-            $table->foreignIdFor(Replacement::class)->constrained();
+            $table->foreignIdFor(Replacement::class)->constrained()->cascadeOnDelete();
             $table->float('price');
             $table->integer('quantity');
             $table->timestamps();

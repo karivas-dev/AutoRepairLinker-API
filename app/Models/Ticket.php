@@ -12,6 +12,7 @@ use Znck\Eloquent\Traits\BelongsToThrough;
 class Ticket extends Model
 {
     use HasFactory, BelongsToThrough, SoftDeletes;
+    protected $guarded = ['id'];
 
     public function bids(): HasMany
     {
